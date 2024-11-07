@@ -1,0 +1,5 @@
+Pillow
+PySimpleGUI
+tk-tools
+numpy
+matplotlib

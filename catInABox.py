@@ -8,6 +8,9 @@ from matplotlib import use as use_agg
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
+IMAGE_PATH="resources/images/"
+FONT_PATH="resources/fonts/"
+
 WINDOW_WIDTH = 500
 WINDOW_HEIGHT = 600
 dialogue_width = 40
@@ -35,8 +38,8 @@ intro_text = [
     "Messages:*Commands"
 ]
 intro_index = 0
-image = Image.open('box2.png').resize((200,200))
-image.save("box2_resized.png")
+image = Image.open(f"{IMAGE_PATH}box2.png").resize((200,200))
+image.save(f"{IMAGE_PATH}box2_resized.png")
 sg.theme('DarkBlack1')
 sg.set_options(font=("Courier New", 12))
 sg.set_options(text_color="#33FF00")
@@ -60,7 +63,7 @@ list_commands = ["EXTRACTOR-OPEN-TIME-23:00", "EXTRACTOR-CLOSE-TIME-23:30"]
 
 clock_string = 'DAY: {}     TIME: 09:00'
 day = 1
-static_info = sg.Column([[sg.Push(), sg.Image("console_image_resized.png", key="image"), sg.Push()],
+static_info = sg.Column([[sg.Push(), sg.Image(f"{IMAGE_PATH}console_image_resized.png", key="image"), sg.Push()],
                         [sg.Text(textwrap.fill(intro_text[intro_index],dialogue_width), key='-dialogue-',
                         size=(dialogue_width,3))],
                         [sg.Text('CONSOLE>_', visible=False, key='console')],
@@ -184,7 +187,7 @@ while True:
         day+=1
         window['clock'].update(clock_string.format(day))
         if result == "DEAD":
-            window['image'].update(filename="game_over_resized.png")
+            window['image'].update(filename=f"{IMAGE_PATH}game_over_resized.png")
             intro_text.append("Messages: GAME OVER")
             window['commands'].update(visible=False)
 
@@ -198,13 +201,13 @@ while True:
             window["-dialogue-"].update(current_message)
 
     if trigger == "Box":
-        window["image"].update(filename="box2_resized.png")
+        window["image"].update(filename=f"{IMAGE_PATH}box2_resized.png")
     elif trigger == "Console":
         window["console"].update(visible=True)
         window["clock"].update(visible=True)
     elif trigger == "Dispenser":
         window["disp_status"].update(visible=True)
-        window["image"].update(filename="console_image_resized.png")
+        window["image"].update(filename=f"{IMAGE_PATH}console_image_resized.png")
         # window["extr_status"].update(visible=True)
     elif trigger == "Scale":
         window['scale'].update(visible=True)
