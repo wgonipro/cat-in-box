@@ -1,4 +1,5 @@
 import datetime as dt
+import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -27,6 +28,11 @@ def run_day(box, cat, dispenser, extractor, dispenser_commands, extractor_comman
     time = time_start
     time_array = []
     box_mass = []
+    hunger = []
+    food = []
+    waste = []
+    disp = []
+    extr = []
     result = None
 
     for step in range(step_per_day):
@@ -57,29 +63,37 @@ def run_day(box, cat, dispenser, extractor, dispenser_commands, extractor_comman
         time = time + time_interval
 
         box_mass.append(box.mass_total)
+        hunger.append(cat.hunger)
+        food.append(box.mass_food)
+        waste.append(box.mass_waste)
+        disp.append(int(dispenser.status))
+        extr.append(int(extractor.status))
 
     if cat.hunger < 0:
         result = "DEAD"
 
-    # plt.rc('axes',edgecolor='#FFCC00')
-    # plt.rc('xtick', color='#FFCC00')
-    # plt.rc('ytick', color='#FFCC00')
-    # plt.rc('font', family='courier')
-    # plt.rc('font', size='7')
+    # plt.rcdefaults()
+    # fig, ax = plt.subplots(1, 3)
+    # # ax2 = ax[0].twinx()
+    # ax[0].plot(time_array, hunger)
+    # ax[0].set_ylabel('Hunger Score')
     #
-    # fig, ax = plt.subplots()
-    # ax.plot(time_array, box_mass, '-', color='#33FF00')
-    # ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
-    # ax.set_facecolor((0,0,0))
-    # fig.patch.set_facecolor((0,0,0))
+    # ax[1].plot(time_array, np.array([food, waste]).transpose(),
+    #            label=['Food Mass', 'Waste Mass'])
+    # ax[1].plot(time_array, extr, '--k')
+    # ax[1].plot(time_array, disp, '--b')
+    # ax[1].set_ylabel('Mass')
+    # ax[1].set_ylim([0, 0.2])
     #
+    # ax[2].plot(time_array, np.array(box_mass),
+    #            label=['Box Mass'])
+    # ax[2].plot(time_array, np.array(extr)*10, '--k')
+    # ax[2].plot(time_array, np.array(disp)*10, '--b')
+    # ax[2].set_ylabel('Mass')
+    # ax[2].set_ylim([4.0, 4.8])
     # plt.xticks(rotation=70)
-    # plt.grid(color='#FFCC00', alpha=0.8, linestyle='--')
-    # #plt.xlabel('Time', color='#FFCC00')
-    # plt.ylabel('Mass (kg)', color='#FFCC00')
-    # fig.set_size_inches(5, 5)
-    # plt.savefig('mass_scale_reading.png',bbox_inches='tight',dpi=100)
-
+    # plt.legend()
+    # plt.show()
     return result, time_array, box_mass
 
     # image = Image.open('mass_scale_reading.png').resize((200,200))

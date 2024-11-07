@@ -59,8 +59,6 @@ plt.rc('font',  size='9')
 list_commands = ["DISPENSER-OPEN-TIME-10:00", "DISPENSER-CLOSE-TIME-11:00",
                  "EXTRACTOR-OPEN-TIME-23:00", "EXTRACTOR-CLOSE-TIME-23:30"]
 
-list_commands = ["EXTRACTOR-OPEN-TIME-23:00", "EXTRACTOR-CLOSE-TIME-23:30"]
-
 clock_string = 'DAY: {}     TIME: 09:00'
 day = 1
 static_info = sg.Column([[sg.Push(), sg.Image(f"{IMAGE_PATH}console_image_resized.png", key="image"), sg.Push()],
@@ -165,6 +163,9 @@ while True:
     elif event == "-EXTR_ADD-":
         list_commands.append('EXTRACTOR-{}-{}-{}'.format(
             values['-EXTR_STATUS-'],values['-EXTR_WHEN-'],values['-EXTR_VALUE-']))
+        window['commandsList'].update(list_commands)
+    elif event == "-DELETE-":
+        list_commands = [command for command in list_commands if command not in values['commandsList']]
         window['commandsList'].update(list_commands)
     elif event == "Submit":
         dispenser_commands, extractor_commands = parse_commands(list_commands)
