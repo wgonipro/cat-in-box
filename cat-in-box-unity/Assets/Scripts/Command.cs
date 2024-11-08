@@ -41,7 +41,7 @@ public class Command
     protected virtual void ParseInput() {}
     
     protected System.DateTime ParseTime(string timeArg) {
-        return System.DateTime.Parse(timeArg);   
+        return System.DateTime.Parse(timeArg);
     }
 
     public string GetHelpText() 
@@ -53,7 +53,8 @@ public class Command
 public class DispenserCommand : Command {
     private State state;
     private Trigger trigger;
-    private string reads;
+    private string weight;
+    private System.DateTime time;
     private int expectedCmdLength = 4;
 
 
@@ -62,7 +63,7 @@ public class DispenserCommand : Command {
         helpText = "Usage:\ndispenser {state} {trigger} {reads}";
         helpText += "\n state: open or closed";
         helpText += "\n trigger: time or mass";
-        helpText += "\n reads: 00:00:00 or 10kg";
+        helpText += "\n reads: 00:00 or 10kg";
 
         ParseInput();
     }
@@ -98,17 +99,16 @@ public class DispenserCommand : Command {
 
         switch (trigger) {
             case Trigger.TIME:
-                reads = args[3];
+                time = ParseTime(args[3]);
                 break;
             case Trigger.MASS:
-                reads = args[3];
                 break;
         }
     }
 
     public override void Execute() {
         Debug.Log("Executing Dispenser Command");
-        Debug.Log($"state {state} | trigger {trigger} | reads {reads}");
+        Debug.Log($"state {state} | trigger {trigger} | time {time}");
     }
 }
 
@@ -123,7 +123,7 @@ public class ExtractorCommand : Command {
         helpText = "Usage:\nextractor {state} {trigger} {reads}";
         helpText += "\n state: open or closed";
         helpText += "\n trigger: time or mass";
-        helpText += "\n reads: 00:00:00 or 10kg";
+        helpText += "\n reads: 00:00 or 10kg";
 
         ParseInput();
     }

@@ -6,7 +6,7 @@ using UnityEngine;
 using System.IO;
 
 public class GameManager : MonoBehaviour
-{
+{    
     private static GameManager _instance;
     public static GameManager instance
     {
@@ -19,12 +19,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private Dialog dialog = new Dialog();
     public TMP_Text dialogue;
     public TextAsset dialogFile;
-    public GameObject terminal;
-    private bool isTerminalActive = false;
     private int dialogue_index = 0;
-    Dialog dialog = new Dialog();
 
     private void Awake()
     {
@@ -45,17 +43,13 @@ public class GameManager : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Return)) {
                 dialogue.text = GetNextDialogue();
             }
-        } else if (!isTerminalActive) {
-            isTerminalActive = true;
-            terminal.SetActive(isTerminalActive);
         }
     }
 
     string GetNextDialogue() {
         dialogue_index += 1;
         if (dialogue_index >= dialog.intro.Length) {
-            Debug.Log(dialog.intro.Length);
-            return dialog.intro[dialog.intro.Length - 1];
+            return "";
         }
         return dialog.intro[dialogue_index];
     }
