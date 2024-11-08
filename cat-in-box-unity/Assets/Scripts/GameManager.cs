@@ -7,12 +7,29 @@ using System.IO;
 
 public class GameManager : MonoBehaviour
 {
+    private static GameManager _instance;
+    public static GameManager instance
+    {
+        get
+        {
+            if(_instance is null)
+                Debug.LogError("GameManager is NULL");
+            
+            return _instance;
+        }
+    }
+
     public TMP_Text dialogue;
     public TextAsset dialogFile;
     public GameObject terminal;
     private bool isTerminalActive = false;
     private int dialogue_index = 0;
     Dialog dialog = new Dialog();
+
+    private void Awake()
+    {
+        _instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
