@@ -94,7 +94,7 @@ def run_day(box, cat, dispenser, extractor, dispenser_commands, extractor_comman
     # plt.xticks(rotation=70)
     # plt.legend()
     # plt.show()
-    return result, time_array, box_mass
+    return result, time_array, box_mass, disp, extr
 
     # image = Image.open('mass_scale_reading.png').resize((200,200))
     # image.save("mass_scale_reading.png")

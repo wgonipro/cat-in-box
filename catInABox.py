@@ -65,10 +65,10 @@ while True:
         window['commandsList'].update(list_commands)
     elif event == "Submit":
         dispenser_commands, extractor_commands = utilities.parse_commands(list_commands)
-        result, t, mass = simulation.run_day(box, cat, dispenser, extractor,  dispenser_commands, extractor_commands)
+        result, t, mass, disp, extr = simulation.run_day(box, cat, dispenser, extractor,  dispenser_commands, extractor_commands)
         if fig_agg is not None:
             utilities.delete_fig_agg(fig_agg)
-        fig, ax = utilities.make_figure(t, mass)
+        fig, ax = utilities.make_figure(t, mass, disp, extr)
         fig_agg = utilities.draw_figure(window['CANVAS'].TKCanvas, fig)
 
         window['report'].update(visible=True)

@@ -1,5 +1,6 @@
 import textwrap
 import PySimpleGUI as sg
+import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
@@ -25,13 +26,29 @@ def parse_commands(commands):
                 extr_commands[False] = command.split('-')[-1]
     return disp_commands,extr_commands
 
-def make_figure(time, mass):
+def make_figure(time, mass, disp, extr):
     fig, ax = plt.subplots()
     ax.plot(time, mass, '-', color='#33FF00')
     ax.xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
-    plt.xticks(rotation=70)
-    plt.ylabel('Mass (kg)', color='#FFCC00')
-    plt.grid()
+    ax.tick_params(axis='x', labelrotation=70)
+    ax.set_ylabel('Mass (kg)', color='#FFCC00')
+    ax.grid()
+
+    ax2 = ax.twinx()
+    time_double = []
+    disp_double = []
+    extr_double = []
+    for i in range(len(time)):
+        time_double.append(time[i])
+        time_double.append(time[i])
+        disp_double.append(disp[i])
+        disp_double.append(disp[min(i+1, len(time)-1)])
+        extr_double.append(extr[i])
+        extr_double.append(extr[min(i+1, len(time)-1)])
+    ax2.plot(time_double, disp_double, '--', color='#00BFFF')
+    ax2.plot(time_double, extr_double, '--', color='#DC143C')
+    ax2.set_ylim(0.1,1.1)
+
     plt.tight_layout()
     return fig, ax
 
@@ -67,7 +84,7 @@ def make_window(messages, clock_string, dialogue_index=0, day=1):
                                           sg.Combo(['OPEN', 'CLOSE'], key='-EXTR_STATUS-', default_value='OPEN'),
                                           sg.Text('WHEN'),
                                           sg.Combo(['TIME', 'MASS1'], default_value='TIME', key='-EXTR_WHEN-'),
-                                          sg.Text('READS'), sg.Input(default_text='', key='-EXTRVALUE-', size=(5, 1)),
+                                          sg.Text('READS'), sg.Input(default_text='', key='-EXTR_VALUE-', size=(5, 1)),
                                           sg.Button("+", key='-EXTR_ADD-')],
                                          [sg.Listbox([], size=(53, 10), key='commandsList',
                                                      select_mode=sg.SELECT_MODE_EXTENDED)],
