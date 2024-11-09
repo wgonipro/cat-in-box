@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
             return _instance;
         }
     }
-
     public Simulator activeSim;
 
     private void Awake()

@@ -61,7 +61,8 @@ public class DispenserCommand : Command {
 
         switch (trigger) {
             case Trigger.TIME:
-                cmdString += $"{time.Hour}:{time.Minute}";
+                cmdString += $"{time}";
+                /// cmdString += $"{time.Hour}:{time.Minute}";
                 break;
             case Trigger.MASS:
                 cmdString += $"{weight}";

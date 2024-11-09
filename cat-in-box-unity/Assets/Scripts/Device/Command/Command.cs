@@ -15,7 +15,7 @@ public enum Trigger
     MASS
 }
 
-public class Command 
+public class Command
 {
     static int _id = 0;
     int id;
@@ -41,7 +41,8 @@ public class Command
     public virtual string AsString() { return ""; }
     
     protected DateTime ParseTimeString(string timeString) {
-        return DateTime.ParseExact(timeString, "HH:mm", null);
+        DateTime dateTime = DateTime.ParseExact(timeString, "HH:mm", null);
+        return SimTime.SetDateToDefault(dateTime);
     }
 
     public int GetID() {

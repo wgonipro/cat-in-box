@@ -4,16 +4,42 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor.Search;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class Simulator : MonoBehaviour
 {
+    List<Command> commands = new List<Command>();
+    public Cat cat;
+    public Box box;
+    public Button runBtn;
+    public DateTime startTime { get; } = SimTime.NewTime(9, 0);
+    public DateTime endTime { get; } = SimTime.NewTime(21, 0);
+    public double timeStep = 30.0d;
+    void Awake() {
+        runBtn.onClick.AddListener(delegate {
+            runBtn.enabled = false;
+            RunSimulation();
+        });
+    }
+
+    void RunSimulation() {
+        Debug.Log("Running Simulation");
+        // DateTime curTime = startTime;
+        // while(curTime != endTime) {
+        //     if (curTime.Minute == 0)
+        //         cat.hunger += 10;
+
+        //     curTime.AddMinutes(timeStep);
+        // }
+    }
+
+    // UI + more
+
     public GameObject history;
     public GameObject historyItemPrefab;
+    public float offset = 15.0f;
 
-    public float offset = 10.0f;
-
-    List<Command> commands = new List<Command>();
+    
     public void SubmitCommand(Command command) {
 
         GameObject histItem = Instantiate(historyItemPrefab, history.transform);
