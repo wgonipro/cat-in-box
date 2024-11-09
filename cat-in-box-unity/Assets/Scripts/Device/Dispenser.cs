@@ -1,46 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
+using System;
+using System.Security.Cryptography;
 
-public enum State 
+public class Dispenser : MonoBehaviour
 {
-    OPEN,
-    CLOSED
-}
-
-public enum Trigger
-{
-    TIME,
-    MASS
-}
-
-public class Command 
-{
-    static public Dictionary<string, State> stateMap = new Dictionary<string, State> {
-        { "open", State.OPEN },
-        { "closed", State.CLOSED }
-    };
-
-    static public Dictionary<string, Trigger> triggerMap = new Dictionary<string, Trigger> {
-        { "time", Trigger.TIME },
-        { "mass", Trigger.MASS }
-    };
-
-    public Command()
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
     {
+        
     }
 
-    public virtual void Execute() {}
-    public virtual string AsString() { return ""; }
-    
-    protected DateTime ParseTimeString(string timeString) {
-        return DateTime.ParseExact(timeString, "HH:mm", null);
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }
 
 public class DispenserCommand : Command {
-    private string commandName = "DISPENSER";
     private State state;
     private Trigger trigger;
     private int weight = 0;
@@ -49,6 +26,7 @@ public class DispenserCommand : Command {
 
     public DispenserCommand(string state, string trigger, string reads) : base() 
     {
+        commandName = "DISPENSER";
         if (stateMap.ContainsKey(state.ToLower())) {
             this.state = stateMap[state.ToLower()];
         } else {
@@ -83,7 +61,7 @@ public class DispenserCommand : Command {
 
         switch (trigger) {
             case Trigger.TIME:
-                cmdString += $"{time}";
+                cmdString += $"{time.Hour}:{time.Minute}";
                 break;
             case Trigger.MASS:
                 cmdString += $"{weight}";
@@ -97,21 +75,5 @@ public class DispenserCommand : Command {
     {
         base.Execute();
         Debug.Log($"Dispenser: {state} | {trigger} | {weight} | {time}");
-    }
-}
-
-public class ExtractorCommand : Command {
-    private State state;
-    private Trigger trigger;
-    private string reads;
-    private int expectedCmdLength = 4;
-
-    public ExtractorCommand(string args0) : base()
-    {
-    }
-
-    public override void Execute() {
-        Debug.Log("Executing Extractor Command");
-        Debug.Log($"state {state} | trigger {trigger} | reads {reads}");
     }
 }

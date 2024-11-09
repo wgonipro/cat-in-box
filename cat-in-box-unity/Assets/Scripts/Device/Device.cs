@@ -12,25 +12,32 @@ public class Device : MonoBehaviour
         InitializeUI();
     }
 
-
-
     /*******************************************
     *                    UI                    *
     ********************************************/
-    private TMP_Dropdown stateDropdown;
-    private TMP_Dropdown triggerDropdown;
-    private TMP_InputField inputField;
-    private Button submitButton;
+    // Till end should be private - keeping public to debug
+    public TMP_Dropdown stateDropdown;
+    public TMP_Dropdown triggerDropdown;
+    public TMP_InputField inputField;
+    public Button submitButton;
+    // end
     public TMP_InputValidator timeValidator;
     public TMP_InputValidator massValidator;
 
     void InitializeUI()
     {
-        // Shouldn't use Find, will need a better way to correctly get dropdowns. Honestly could maybe be public?
-        stateDropdown = transform.Find("StateDropdown").GetComponent<TMP_Dropdown>();
-        triggerDropdown = transform.Find("TriggerDropdown").GetComponent<TMP_Dropdown>();
-        inputField = transform.Find("ReadsInput").GetComponent<TMP_InputField>();
-        submitButton = transform.Find("Submit").GetComponent<Button>();
+        TMP_Dropdown[] dropdowns = transform.GetComponentsInChildren<TMP_Dropdown>();
+        foreach(TMP_Dropdown dropdown in dropdowns) {
+            // definitely not ideal to use names - will come back to fix. Maybe use tags?
+            if (dropdown.name.ToLower().Contains("state"))
+                stateDropdown = dropdown;
+
+            if (dropdown.name.ToLower().Contains("trigger"))
+                triggerDropdown = dropdown;
+        }
+
+        inputField = transform.GetComponentInChildren<TMP_InputField>();
+        submitButton = transform.GetComponentInChildren<Button>();
 
         triggerDropdown.onValueChanged.AddListener(delegate {
             DropdownValueChanges(triggerDropdown);
@@ -46,11 +53,12 @@ public class Device : MonoBehaviour
         Debug.Log($"Reads section is: {inputField.text}");
         Simulator activeSim = GameManager.instance.activeSim;
         string state = stateDropdown.options[stateDropdown.value].text;
-        string trigger = triggerDropdown.options[stateDropdown.value].text;
+        string trigger = triggerDropdown.options[triggerDropdown.value].text;
         string reads = inputField.text;
 
+        Debug.Log($"{state} {trigger} {reads}");
         DispenserCommand command = new DispenserCommand(state, trigger, reads);
-        activeSim.submitCommand(command);
+        activeSim.SubmitCommand(command);
     }
 
     void DropdownValueChanges(TMP_Dropdown change)

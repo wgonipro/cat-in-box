@@ -11,7 +11,6 @@ public class TimeInput_Validator : TMP_InputValidator
 
     public override char Validate(ref string text, ref int pos, char ch)
     {
-        Debug.Log($"Text = {text}; pos = {pos}; chr = {ch}");
         if (pos >= timeLength)
             return '\0';
         
