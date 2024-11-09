@@ -19,15 +19,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private Dialog dialog = new Dialog();
-    public TMP_Text dialogue;
-    public TextAsset dialogFile;
-    private int dialogue_index = 0;
+    public Simulator activeSim;
 
     private void Awake()
     {
         _instance = this;
     }
+
+
+    private Dialog dialog = new Dialog();
+    public TMP_Text dialogue;
+    public TextAsset dialogFile;
+    private int dialogue_index = 0;
 
     // Start is called before the first frame update
     void Start()

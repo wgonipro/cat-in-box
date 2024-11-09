@@ -17,98 +17,86 @@ public enum Trigger
 
 public class Command 
 {
-    protected Dictionary<string, State> stateMap = new Dictionary<string, State> {
+    static public Dictionary<string, State> stateMap = new Dictionary<string, State> {
         { "open", State.OPEN },
         { "closed", State.CLOSED }
     };
 
-    protected Dictionary<string, Trigger> triggerMap = new Dictionary<string, Trigger> {
+    static public Dictionary<string, Trigger> triggerMap = new Dictionary<string, Trigger> {
         { "time", Trigger.TIME },
         { "mass", Trigger.MASS }
     };
 
-    protected string[] args;
-    protected string helpText = "Usage:\nplease type dispenser or extractor for more info";
-    public bool error = false;
-    public string errorMsg;
-
-    public Command(string args0)
+    public Command()
     {
-        args = args0.Split(" ");
     }
 
     public virtual void Execute() {}
-    protected virtual void ParseInput() {}
+    public virtual string AsString() { return ""; }
     
-    protected System.DateTime ParseTime(string timeArg) {
-        return System.DateTime.Parse(timeArg);
-    }
-
-    public string GetHelpText() 
-    {
-        return helpText;
+    protected DateTime ParseTimeString(string timeString) {
+        return DateTime.ParseExact(timeString, "HH:mm", null);
     }
 }
 
 public class DispenserCommand : Command {
+    private string commandName = "DISPENSER";
     private State state;
     private Trigger trigger;
-    private string weight;
-    private System.DateTime time;
-    private int expectedCmdLength = 4;
+    private int weight = 0;
+    private DateTime time = new DateTime();
 
 
-    public DispenserCommand(string args0) : base(args0) 
+    public DispenserCommand(string state, string trigger, string reads) : base() 
     {
-        helpText = "Usage:\ndispenser {state} {trigger} {reads}";
-        helpText += "\n state: open or closed";
-        helpText += "\n trigger: time or mass";
-        helpText += "\n reads: 00:00 or 10kg";
+        if (stateMap.ContainsKey(state.ToLower())) {
+            this.state = stateMap[state.ToLower()];
+        } else {
+            throw new Exception("state not valid");
+        }
 
-        ParseInput();
+        if (triggerMap.ContainsKey(trigger.ToLower())) {
+            this.trigger = triggerMap[trigger.ToLower()];
+        } else {
+            throw new Exception("trigger not valid");
+        }
+        
+        switch (this.trigger) {
+            case Trigger.TIME:
+                try {
+                    time = ParseTimeString(reads);
+                } catch (Exception e) {
+                    throw new Exception($"time string failed to parse + {e}");
+                }
+                break;
+            case Trigger.MASS:
+                weight = int.Parse(reads);
+                break;
+            default:
+                throw new Exception("reads not valid");
+        }
     }
 
-    protected override void ParseInput()
+    public override string AsString()
     {
-        base.ParseInput();
-        
-        if (args.Length != expectedCmdLength) {
-            error = true;
-            errorMsg = "parameters invalid";
-            return;
-        }
-
-        string stateArg = args[1].ToLower();
-        string triggerArg = args[2].ToLower();
-
-        if (stateMap.ContainsKey(stateArg)) {
-            state = stateMap[stateArg];
-        } else {
-            error = true;
-            errorMsg = "state parameter invalid";
-            return;
-        }
-
-        if (triggerMap.ContainsKey(triggerArg)) {
-            trigger = triggerMap[triggerArg];
-        } else {
-            error = true;
-            errorMsg = "trigger parameter invalid";
-            return;
-        }
+        string cmdString = $"{commandName} {state} {trigger} ";
 
         switch (trigger) {
             case Trigger.TIME:
-                time = ParseTime(args[3]);
+                cmdString += $"{time}";
                 break;
             case Trigger.MASS:
+                cmdString += $"{weight}";
                 break;
         }
+
+        return cmdString;
     }
 
-    public override void Execute() {
-        Debug.Log("Executing Dispenser Command");
-        Debug.Log($"state {state} | trigger {trigger} | time {time}");
+    public override void Execute()
+    {
+        base.Execute();
+        Debug.Log($"Dispenser: {state} | {trigger} | {weight} | {time}");
     }
 }
 
@@ -118,52 +106,8 @@ public class ExtractorCommand : Command {
     private string reads;
     private int expectedCmdLength = 4;
 
-    public ExtractorCommand(string args0) : base(args0)
+    public ExtractorCommand(string args0) : base()
     {
-        helpText = "Usage:\nextractor {state} {trigger} {reads}";
-        helpText += "\n state: open or closed";
-        helpText += "\n trigger: time or mass";
-        helpText += "\n reads: 00:00 or 10kg";
-
-        ParseInput();
-    }
-
-    protected override void ParseInput()
-    {
-        base.ParseInput();
-        if (args.Length != expectedCmdLength) {
-            error = true;
-            errorMsg = "parameters invalid";
-            return;
-        }
-
-        string stateArg = args[1].ToLower();
-        string triggerArg = args[2].ToLower();
-
-        if (stateMap.ContainsKey(stateArg)) {
-            state = stateMap[stateArg];
-        } else {
-            error = true;
-            errorMsg = "state parameter invalid";
-            return;
-        }
-
-        if (triggerMap.ContainsKey(triggerArg)) {
-            trigger = triggerMap[triggerArg];
-        } else {
-            error = true;
-            errorMsg = "trigger parameter invalid";
-            return;
-        }
-
-        switch (trigger) {
-            case Trigger.TIME:
-                reads = args[3];
-                break;
-            case Trigger.MASS:
-                reads = args[3];
-                break;
-        }
     }
 
     public override void Execute() {
