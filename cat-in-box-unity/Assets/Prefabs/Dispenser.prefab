@@ -1714,10 +1714,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3603276709287539932}
-  - component: {fileID: 4401431449397636590}
+  - component: {fileID: 4325074395427545562}
   m_Layer: 5
   m_Name: Dispenser
-  m_TagString: Untagged
+  m_TagString: Device
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1748,7 +1748,7 @@ RectTransform:
   m_AnchoredPosition: {x: -0.0021972656, y: -22.607498}
   m_SizeDelta: {x: -0.92, y: 45.755005}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4401431449397636590
+--- !u!114 &4325074395427545562
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1757,11 +1757,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 4624036117295124254}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bfda77618c5f4c84a4cbfe2c07715c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a2a73959e8064881bbb475f31cfb31b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateDropdown: {fileID: 0}
+  triggerDropdown: {fileID: 0}
+  inputField: {fileID: 0}
+  submitButton: {fileID: 0}
   timeValidator: {fileID: 11400000, guid: 49a066398a5904573aef4168bd13d0b4, type: 2}
   massValidator: {fileID: 11400000, guid: fcfcc1ab1f6324c16b4d0938e60ead53, type: 2}
+  flowRate: 30
 --- !u!1 &5142008796173123425
 GameObject:
   m_ObjectHideFlags: 0

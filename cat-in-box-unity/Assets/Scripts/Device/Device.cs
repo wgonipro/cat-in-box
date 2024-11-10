@@ -2,12 +2,17 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+public enum DeviceState 
+{
+    OPEN,
+    CLOSED
+}
+
 public class Device : MonoBehaviour
 {
-    
-    
+    protected DeviceState deviceState = DeviceState.CLOSED;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected void Start()
     {
         InitializeUI();
     }
@@ -24,7 +29,7 @@ public class Device : MonoBehaviour
     public TMP_InputValidator timeValidator;
     public TMP_InputValidator massValidator;
 
-    void InitializeUI()
+    protected void InitializeUI()
     {
         TMP_Dropdown[] dropdowns = transform.GetComponentsInChildren<TMP_Dropdown>();
         foreach(TMP_Dropdown dropdown in dropdowns) {
@@ -48,20 +53,20 @@ public class Device : MonoBehaviour
         });
     }
 
-    void SubmitCommand()
+    protected virtual void SubmitCommand()
     {
         Debug.Log($"Reads section is: {inputField.text}");
-        Simulator activeSim = GameManager.instance.activeSim;
-        string state = stateDropdown.options[stateDropdown.value].text;
-        string trigger = triggerDropdown.options[triggerDropdown.value].text;
-        string reads = inputField.text;
+        // Simulator activeSim = GameManager.instance.activeSim;
+        // string state = stateDropdown.options[stateDropdown.value].text;
+        // string trigger = triggerDropdown.options[triggerDropdown.value].text;
+        // string reads = inputField.text;
 
-        Debug.Log($"{state} {trigger} {reads}");
-        DispenserCommand command = new DispenserCommand(state, trigger, reads);
-        activeSim.SubmitCommand(command);
+        // Debug.Log($"{state} {trigger} {reads}");
+        // DispenserCommand command = new DispenserCommand(state, trigger, reads);
+        // activeSim.SubmitCommand(command);
     }
 
-    void DropdownValueChanges(TMP_Dropdown change)
+    protected void DropdownValueChanges(TMP_Dropdown change)
     {
         var options = change.options;
         string text = options[change.value].text;
@@ -73,5 +78,17 @@ public class Device : MonoBehaviour
         if (text.ToLower() == "time")
             inputField.inputValidator = timeValidator;
         
+    }
+
+    public virtual void Activate(Box box, Cat cat) {
+        return;
+    }
+
+    public void SetDeviceState(DeviceState state) {
+        deviceState = state;
+    }
+
+    public DeviceState GetDeviceState() {
+        return deviceState;
     }
 }

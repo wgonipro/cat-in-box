@@ -1,13 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
-
-public enum State 
-{
-    OPEN,
-    CLOSED
-}
 
 public enum Trigger
 {
@@ -21,9 +14,9 @@ public class Command
     int id;
     protected string commandName = "DEFAULT";
     public HistoryItemUI histItemUI;
-    static public Dictionary<string, State> stateMap = new Dictionary<string, State> {
-        { "open", State.OPEN },
-        { "closed", State.CLOSED }
+    static public Dictionary<string, DeviceState> stateMap = new Dictionary<string, DeviceState> {
+        { "open", DeviceState.OPEN },
+        { "closed", DeviceState.CLOSED }
     };
 
     static public Dictionary<string, Trigger> triggerMap = new Dictionary<string, Trigger> {
@@ -48,4 +41,7 @@ public class Command
     public int GetID() {
         return id;
     }
+
+    public virtual bool CheckTrigger(DateTime curTime, Box box) { return false; }
+    public virtual void DisplayState() {}
 }

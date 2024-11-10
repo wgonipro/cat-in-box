@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
         }
     }
     public Simulator activeSim;
+    public Cat cat;
+    public Box box;
 
     private void Awake()
     {

@@ -227,9 +227,57 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 5.5683, y: -6.1253}
-  m_SizeDelta: {x: -12.3429, y: 430.0951}
+  m_AnchoredPosition: {x: 0.0001105071, y: 1.1208588}
+  m_SizeDelta: {x: -12.3429, y: 278.34}
   m_Pivot: {x: 0, y: 1}
+--- !u!1 &161999597
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 161999598}
+  - component: {fileID: 161999599}
+  m_Layer: 0
+  m_Name: Cat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &161999598
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161999597}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 760355145}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &161999599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161999597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3089a70f499544d309a6b0355875a6d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mealSize: 0
+  massConsumed: 0
+  cyclesPassed: 0
+  firstAte: 0
 --- !u!1 &172805496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1092,6 +1140,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 696737484}
   m_CullTransparentMesh: 1
+--- !u!1 &760355143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 760355145}
+  - component: {fileID: 760355144}
+  m_Layer: 0
+  m_Name: Box
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &760355144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760355143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2602f6e5829664fa1bd44ff0f4a00c49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  massDisplay: 0
+  things: []
+--- !u!4 &760355145
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 760355143}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 546.68195, y: 281.6969, z: -1.036783}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 161999598}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &945626130
 GameObject:
   m_ObjectHideFlags: 0
@@ -1219,7 +1314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Content: {fileID: 0}
+  m_Content: {fileID: 118652861}
   m_Horizontal: 1
   m_Vertical: 1
   m_MovementType: 1
@@ -1425,8 +1520,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 696737486}
   m_HandleRect: {fileID: 696737485}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: -283.71317
+  m_Size: 0.9888411
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1498,6 +1593,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bcef55beb9b9473b8aa209309db0b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeSim: {fileID: 1394961443}
+  cat: {fileID: 161999599}
+  box: {fileID: 760355144}
   dialogue: {fileID: 511032657}
   dialogFile: {fileID: 4900000, guid: 32f2bc3f573e847c9a28a3c926d635ad, type: 3}
 --- !u!4 &1312437851
@@ -1510,6 +1608,58 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 404.55533, y: 352.39017, z: -2.9958403}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1394961442
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1394961444}
+  - component: {fileID: 1394961443}
+  m_Layer: 0
+  m_Name: Simulator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1394961443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394961442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cafa31797644b4aef88f3cb510798e68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cat: {fileID: 0}
+  box: {fileID: 0}
+  devices: []
+  runBtn: {fileID: 1886529498}
+  cycles: 96
+  history: {fileID: 118652860}
+  historyItemPrefab: {fileID: 1596620517553800679, guid: ce0a1b93e8dd84156b1e202d252a6135, type: 3}
+  offset: 15
+--- !u!4 &1394961444
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1394961442}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 546.68195, y: 281.6969, z: -1.036783}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2283,3 +2433,5 @@ SceneRoots:
   - {fileID: 1312437851}
   - {fileID: 1434294291}
   - {fileID: 1079714631}
+  - {fileID: 1394961444}
+  - {fileID: 760355145}

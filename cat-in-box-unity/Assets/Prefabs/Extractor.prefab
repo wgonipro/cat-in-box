@@ -810,10 +810,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6976760335952929486}
-  - component: {fileID: 7578164747018722057}
+  - component: {fileID: 3854838627235232668}
   m_Layer: 5
   m_Name: Extractor
-  m_TagString: Untagged
+  m_TagString: Device
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -844,7 +844,7 @@ RectTransform:
   m_AnchoredPosition: {x: -0.0021972656, y: -68.363}
   m_SizeDelta: {x: -0.92, y: 45.755005}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7578164747018722057
+--- !u!114 &3854838627235232668
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -853,11 +853,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1201151620506250024}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f65a5d9f76d3494fa1851c0705c057d, type: 3}
+  m_Script: {fileID: 11500000, guid: 13932118d27334b03b254f543ba5a75c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stateDropdown: {fileID: 0}
+  triggerDropdown: {fileID: 0}
+  inputField: {fileID: 0}
+  submitButton: {fileID: 0}
   timeValidator: {fileID: 11400000, guid: 49a066398a5904573aef4168bd13d0b4, type: 2}
   massValidator: {fileID: 11400000, guid: fcfcc1ab1f6324c16b4d0938e60ead53, type: 2}
+  flowRate: 200
 --- !u!1 &1260960837747599885
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,36 +1,57 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Unity.VisualScripting;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Simulator : MonoBehaviour
 {
     List<Command> commands = new List<Command>();
+    // might need to live on gamemanager
     public Cat cat;
     public Box box;
+    // to here
+    public List<Device> devices;
     public Button runBtn;
-    public DateTime startTime { get; } = SimTime.NewTime(9, 0);
-    public DateTime endTime { get; } = SimTime.NewTime(21, 0);
-    public double timeStep = 30.0d;
+    public DateTime startTime { get; } = SimTime.NewTime(0, 0);
+    public int cycles = 96;
     void Awake() {
         runBtn.onClick.AddListener(delegate {
             runBtn.enabled = false;
             RunSimulation();
+            runBtn.enabled = true;
         });
+
+        GameObject[] devicesObj = GameObject.FindGameObjectsWithTag("Device");
+        foreach(GameObject d in devicesObj) {
+            devices.Add(d.GetComponent<Device>());
+        }
+    }
+
+    void Start() {
+        cat = GameManager.instance.cat;
+        box = GameManager.instance.box;
     }
 
     void RunSimulation() {
         Debug.Log("Running Simulation");
-        // DateTime curTime = startTime;
-        // while(curTime != endTime) {
-        //     if (curTime.Minute == 0)
-        //         cat.hunger += 10;
+        DateTime curTime = startTime;
 
-        //     curTime.AddMinutes(timeStep);
-        // }
+        for(int i = 0; i < cycles; i++) {
+            foreach(Command cmd in commands) {
+                if (cmd.CheckTrigger(curTime, box))
+                    Debug.Log($"Executing Command - {cmd}");
+                    cmd.Execute();
+            }
+
+            foreach(Device device in devices) {
+                device.Activate(box, cat);
+            }
+
+            cat.ProcessTime(box);
+
+            curTime.AddMinutes(SimTime.timeStep);
+        }
     }
 
     // UI + more
@@ -62,7 +83,6 @@ public class Simulator : MonoBehaviour
         foreach(Command cmd in commands) {
             int id = cmd.GetID();
             cmd.Execute();
-            Debug.Log($"{id} is located at {j}");
             j++;
         }
         int index = commands.IndexOf(command);
