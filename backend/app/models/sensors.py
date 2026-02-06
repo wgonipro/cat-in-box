@@ -1,6 +1,6 @@
-from .instruments import Instruments
+from .instruments import Instrument
 
-class Sensors(Instruments):
+class Sensor(Instrument):
 
     def read(self):
         raise NotImplementedError("This method should be implemented by subclasses.")

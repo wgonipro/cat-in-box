@@ -1,6 +1,6 @@
-from .instruments import Instruments
+from .instruments import Instrument
 
-class Actuators(Instruments):
+class Actuator(Instrument):
     def activate(self):
         print(f"{self.name} is activated.")
 

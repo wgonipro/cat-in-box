@@ -1,9 +1,9 @@
 from app.schemas import CommandResult
-from .actuators import Actuators
+from .actuators import Actuator
 from dataclasses import dataclass
 
 @dataclass
-class Feeder(Actuators):
+class Feeder(Actuator):
     name: str = "Feeder"
     feed_rate: float = 0.0
 

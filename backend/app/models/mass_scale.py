@@ -1,6 +1,7 @@
-from .sensors import Sensors
+import random
+from .sensors import Sensor
 
-class MassScale(Instrument):
+class MassScale(Sensor):
     mass: float
 
     def __init__(self, name):
