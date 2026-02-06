@@ -1,4 +1,4 @@
-class Cat
+class Cat:
     hunger: float
     is_alive: bool
     days_survived: int

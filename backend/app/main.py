@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.services import CommandProcessor
+from app.schemas import CommandInput
 
 app = FastAPI()
 
@@ -10,5 +11,6 @@ async def root():
 
 @app.post("/command")
 async def command(input: CommandInput):
-    # Simple echo for now - game logic will go here
-    return {"response": f"You said: {input.text}"}
+    processor = CommandProcessor(command=input.text)
+    result = processor.process()
+    return {"response": f"{result.success}: {result.message}"}
