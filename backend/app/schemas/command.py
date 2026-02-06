@@ -1,8 +1,8 @@
+from pydantic import BaseModel
 
-class ParsedCommand
-    command: str
-    args: list[str]
+class CommandInput(BaseModel):
+    text: str
 
-class CommandResult
+class CommandResult(BaseModel):
     success: bool
     message: str

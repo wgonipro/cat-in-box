@@ -1,12 +1,7 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
+from app.services import CommandProcessor
 
 app = FastAPI()
-
-
-class CommandInput(BaseModel):
-    text: str
-
 
 @app.get("/")
 async def root():
