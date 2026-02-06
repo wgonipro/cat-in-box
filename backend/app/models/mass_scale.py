@@ -1,4 +1,4 @@
-from .instruments import Instrument
+from .sensors import Sensors
 
 class MassScale(Instrument):
     mass: float
@@ -7,9 +7,7 @@ class MassScale(Instrument):
         super().__init__(name)
         self.mass = 0.0
 
-    def execute(self, *args, **kwargs):
-        if 'mass' in kwargs:
-            self.mass = kwargs['mass']
-            print(f"Mass set to {self.mass} kg.")
-        else:
-            print("No mass provided. Mass remains unchanged.")
+    def read(self):
+        self.mass = random.uniform(0.0, 100.0)  # Simulate reading mass from the scale
+        return self.mass
+

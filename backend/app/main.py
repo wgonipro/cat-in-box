@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket
 from app.services import CommandProcessor
 from app.schemas import CommandInput
 
@@ -14,3 +14,4 @@ async def command(input: CommandInput):
     processor = CommandProcessor(command=input.text)
     result = processor.process()
     return {"response": f"{result.success}: {result.message}"}
+
