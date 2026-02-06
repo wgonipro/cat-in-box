@@ -1,5 +1,6 @@
 import { useState, useEffect, KeyboardEvent } from 'react'
 import { Box, Input, Text, VStack, ScrollArea } from '@chakra-ui/react'
+import { MassChart } from './components/MassChart'
 
 function App() {
   const [log, setLog] = useState<string[]>([])
@@ -30,8 +31,9 @@ function App() {
   return (
     <Box bg="black" minH="100vh" p={4} fontFamily="mono">
       <VStack align="stretch" maxW="800px" mx="auto" gap={4}>
+        <MassChart />
         <ScrollArea.Root
-          h="400px"
+          h="300px"
           bg="black"
           border="1px solid"
           borderColor="green.700"
