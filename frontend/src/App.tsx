@@ -1,9 +1,12 @@
 import { useState, useEffect, KeyboardEvent } from 'react'
 import { Box, Input, Text, VStack, ScrollArea } from '@chakra-ui/react'
+import { MassChart } from './components/MassChart'
+import type { FeederEvent } from './components/MassChart'
 
 function App() {
   const [log, setLog] = useState<string[]>([])
   const [input, setInput] = useState('')
+  const [feederEvents, setFeederEvents] = useState<FeederEvent[]>([])
 
   useEffect(() => {
     fetch('/api/')
@@ -11,11 +14,29 @@ function App() {
       .then((data) => setLog([data.message]))
   }, [])
 
+  const parseFeederCommand = (command: string): FeederEvent | null => {
+    // Match "feeder open @ 1" or "feeder close @ 5"
+    const match = command.match(/^feeder\s+(open|close)\s+@\s+(\d+)$/i)
+    if (match) {
+      return {
+        action: match[1].toLowerCase() as 'open' | 'close',
+        time: parseInt(match[2], 10),
+      }
+    }
+    return null
+  }
+
   const handleKeyDown = async (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && input.trim()) {
       const userInput = input.trim()
       setInput('')
       setLog((prev) => [...prev, `> ${userInput}`])
+
+      // Check if it's a feeder command and add to events
+      const feederEvent = parseFeederCommand(userInput)
+      if (feederEvent) {
+        setFeederEvents((prev) => [...prev, feederEvent])
+      }
 
       const res = await fetch('/api/command', {
         method: 'POST',
@@ -30,8 +51,9 @@ function App() {
   return (
     <Box bg="black" minH="100vh" p={4} fontFamily="mono">
       <VStack align="stretch" maxW="800px" mx="auto" gap={4}>
+        <MassChart feederEvents={feederEvents} />
         <ScrollArea.Root
-          h="400px"
+          h="300px"
           bg="black"
           border="1px solid"
           borderColor="green.700"
