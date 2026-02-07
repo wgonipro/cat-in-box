@@ -2,6 +2,7 @@ from dataclasses import dataclass
 
 class Box:
     contents: list = []
+    food_mass: int = 0
 
     def add_item(self, item):
         self.contents.append(item)
