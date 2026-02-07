@@ -22,7 +22,7 @@ class SimulationService:
 
             # check actuators
             for actuator in actuators:
-                actuator.process_command()
+                actuator.process_command(hour)
 
             # read from sensors
             # push to UI
@@ -31,5 +31,6 @@ class SimulationService:
                 print(f"Sensor {sensor.name} read data: {data}")
 
             # process animal actions
+
 
         # return report

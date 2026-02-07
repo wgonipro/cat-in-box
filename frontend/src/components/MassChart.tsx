@@ -1,36 +1,21 @@
-import { useState, useEffect, useRef } from 'react'
 import { Box, Text } from '@chakra-ui/react'
-import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from 'recharts'
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, ReferenceLine } from 'recharts'
 
-interface DataPoint {
+export interface FeederEvent {
   time: number
-  mass: number
+  action: 'open' | 'close'
 }
 
-export function MassChart() {
-  const [data, setData] = useState<DataPoint[]>([])
-  const startTime = useRef(Date.now())
+interface MassChartProps {
+  feederEvents?: FeederEvent[]
+}
 
-  useEffect(() => {
-    const ws = new WebSocket(`ws://${window.location.host}/ws/sensors`)
-
-    ws.onmessage = (event) => {
-      const reading = JSON.parse(event.data)
-      const elapsed = Math.floor((Date.now() - startTime.current) / 1000)
-
-      setData((prev) => {
-        const next = [...prev, { time: elapsed, mass: reading.mass }]
-        // Keep last 60 seconds of data
-        return next.slice(-60)
-      })
-    }
-
-    ws.onerror = (error) => {
-      console.error('WebSocket error:', error)
-    }
-
-    return () => ws.close()
-  }, [])
+export function MassChart({ feederEvents = [] }: MassChartProps) {
+  // Baseline data to establish chart coordinate system
+  const data = [
+    { time: 0, value: 0 },
+    { time: 10, value: 0 },
+  ]
 
   return (
     <Box
@@ -40,13 +25,16 @@ export function MassChart() {
       p={4}
       h="200px"
     >
-      <Text color="green.400" mb={2}>Mass Scale (g)</Text>
+      <Text color="green.400" mb={2}>Simulation Timeline (hours)</Text>
       <ResponsiveContainer width="100%" height="80%">
         <LineChart data={data}>
           <XAxis
             dataKey="time"
+            domain={[0, 10]}
+            ticks={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
             stroke="#2F855A"
             tick={{ fill: '#2F855A' }}
+            type="number"
           />
           <YAxis
             domain={[0, 100]}
@@ -55,11 +43,25 @@ export function MassChart() {
           />
           <Line
             type="monotone"
-            dataKey="mass"
-            stroke="#48BB78"
+            dataKey="value"
+            stroke="transparent"
             dot={false}
-            strokeWidth={2}
           />
+          {feederEvents.map((event, i) => (
+            <ReferenceLine
+              key={i}
+              x={event.time}
+              stroke={event.action === 'open' ? '#48BB78' : '#E53E3E'}
+              strokeWidth={2}
+              strokeDasharray="4 2"
+              label={{
+                value: `${event.action} feeder`,
+                fill: event.action === 'open' ? '#48BB78' : '#E53E3E',
+                fontSize: 10,
+                position: 'top',
+              }}
+            />
+          ))}
         </LineChart>
       </ResponsiveContainer>
     </Box>

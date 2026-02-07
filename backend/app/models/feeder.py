@@ -3,6 +3,7 @@ from .actuators import Actuator
 from dataclasses import dataclass
 from enum import Enum
 from .box import Box
+from pprint import pprint
 
 class FeederState(Enum):
     OPEN = "open"
@@ -34,22 +35,27 @@ class Feeder(Actuator):
         if args[1] != '@':
             return CommandResult(success=False, message=f"Invalid command format. Expected format: <command> @ <timestamp>")
 
-        if args[2] > 10 or args[2] < 0:
+        timestamp = int(args[2])
+
+        if timestamp > 10 or timestamp < 0:
             return CommandResult(success=False, message=f"Invalid timestamp: {args[2]}. Timestamp must be between 0 and 10.")
 
-        commands[args[2]] = command
+        self.commands[args[2]] = command
         msg = f"Command '{command}' scheduled for hour {args[2]}."
+
+        pprint(self.commands)
 
         return CommandResult(success=True, message=msg)
 
-    ## move open to close and close to open
-    def change_state:
+    def handle(self, command: FeederCommand):
+        # alter box state based on command or state
+
         pass
 
     ## if feeder is open provide food, else do not provide food
-    def actuate(self, box: Box)
-        if self.state == "open":
-            self.dispense_food()
+    # def actuate(self, box: Box)
+    #     if self.state == "open":
+    #         self.dispense_food()
 
-    def dispense_food(self, box: Box):
-        pass
+    # def dispense_food(self, box: Box):
+    #     pass
