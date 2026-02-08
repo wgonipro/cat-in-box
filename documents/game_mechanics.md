@@ -9,7 +9,7 @@
 
 ## 1. Animal Metabolism
 
-![Metabolism Containers](/images/metabolism_containers.png)
+![Metabolism Containers](/documents/images/metabolism_containers.png)
 
 **Eating**  
 Each animal needs to eat in order to maintain energy to survive. This can be broken
