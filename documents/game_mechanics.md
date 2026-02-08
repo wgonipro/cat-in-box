@@ -9,6 +9,8 @@
 
 ## 1. Animal Metabolism
 
+![Metabolism Containers](/images/metabolism_containers.png)
+
 **Eating**  
 Each animal needs to eat in order to maintain energy to survive. This can be broken
 down into four containers: stomach, energy, bowel. When the animal has an empty 
@@ -38,7 +40,7 @@ if cat.hungry:
         ERROR
 ```
 
-**Digesting**
+**Digesting**  
 Within the simulation, this should happen before eating to avoid digesting food
 that was consumed on the same tick.  
 
@@ -66,7 +68,7 @@ the animal ate, digestion rate will be competing with consumption rate. In order
 the animal to ever reach satisfied, digestion rate needs to be less than consumption
 rate.  
 
-**Metabolizing**
+**Metabolizing**  
 To stay alive, the animal needs energy to maintain bodily functions. Every tick the 
 animal should expend energy, the metabolic rate. When the animal is unable to support
 the metabolic rate, the animal dies.  
@@ -95,14 +97,14 @@ if cat.energy <= 0:
 cat.energy = cat.energy - cat.METABOLIC_RATE
 ```
 
-**Mass Accounting**
+**Mass Accounting**  
 Accounting for mass throughout this metabolic process is important. We may want to
 adjust the mass totals during each step or reassert the totals by summing the individual
 parts at the end of the simulation cycle.  
 
-'''
-box.total_mass = cat.total_mass + box.food_mass + box.waste_mass + ...
+```
+box.total_mass = cat.total_mass + box.food_mass + box.waste_mass
 
 cat.total_mass = cat.stomach + cat.energy + cat.bowel
-'''
+```
 ---
