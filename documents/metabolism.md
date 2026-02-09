@@ -11,7 +11,7 @@
 
 ## 1. Eating 
 Each animal needs to eat in order to maintain energy to survive. This can be broken
-down into four containers: stomach, energy, bowel. When the animal has an empty 
+down into three containers: stomach, energy, bowel. When the animal has an empty 
 stomach, then they will want to eat. The animal will then eat until satiated, stomach 
 is full or food is unavailable. Satiated is the threshold for when animal is no longer 
 hungry. This value may equal stomach size but is intended to parameterize overeating. 
